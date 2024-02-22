@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+
+  # Jenkins Service
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-jenkins
+    environment:
+      JAVA_OPTS: '-Xmx3g -Xms2G'
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1 
+    volumes:
+      - ./jenkins/data:/var/jenkins_home
+      - ./docker/certs:/certs/client:ro
+    ports:
+      - ${HOST_WWW}:8080
+      - ${HOST_OTHER}:50000
+    depends_on:
+      - docker
+    networks:
+        - jenkins
+
+  # Docker Service
+  docker:
+    image: docker:dind
+    container_name: ${COMPOSE_PROJECT_NAME}-docker
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - ./jenkins/data:/var/jenkins_home
+      - ./docker/certs:/certs/client
+      - ./docker/data:/var/lib/docker
+    networks:
+        - jenkins
+
+networks:
+  jenkins:
+    driver: bridge
+  

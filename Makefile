@@ -16,44 +16,44 @@ install:					## Install project
 	@make -s init
 
 pull:						## Pull project
-	@docker-compose --file $(COMPOSE_FILE_PATH) pull
+	@docker compose --file $(COMPOSE_FILE_PATH) pull
 
 build:						## Build project
-	@docker-compose --file $(COMPOSE_FILE_PATH) build
+	@docker compose --file $(COMPOSE_FILE_PATH) build
 
 build-no-cache:				## Build no cache project
-	@docker-compose --file $(COMPOSE_FILE_PATH) build --no-cache
+	@docker compose --file $(COMPOSE_FILE_PATH) build --no-cache
 
 up-build:					## Up and build project
-	@docker-compose --file $(COMPOSE_FILE_PATH) up --build -d
+	@docker compose --file $(COMPOSE_FILE_PATH) up --build -d
 
 up:							## Up project
-	@docker-compose --file $(COMPOSE_FILE_PATH) up -d
+	@docker compose --file $(COMPOSE_FILE_PATH) up -d
 	@make ps
 
 start-service:						## Start service
-	docker-compose --file $(COMPOSE_FILE_PATH) start $(service)
+	docker compose --file $(COMPOSE_FILE_PATH) start $(service)
 
 down:						## Down project
-	docker-compose --file $(COMPOSE_FILE_PATH) down --remove-orphans
+	docker compose --file $(COMPOSE_FILE_PATH) down --remove-orphans
 
 stop-service:						## Stop service
-	docker-compose --file $(COMPOSE_FILE_PATH) stop $(service)
+	docker compose --file $(COMPOSE_FILE_PATH) stop $(service)
 
 restart:					## Restart project
-	@docker-compose --file $(COMPOSE_FILE_PATH) restart
+	@docker compose --file $(COMPOSE_FILE_PATH) restart
 
 bash:						## Project bash terminal
-	@docker-compose --file $(COMPOSE_FILE_PATH) exec jenkins bash
+	@docker compose --file $(COMPOSE_FILE_PATH) exec jenkins bash
 
 ps:							## Show project process
-	docker-compose --file $(COMPOSE_FILE_PATH) ps
+	docker compose --file $(COMPOSE_FILE_PATH) ps
 
 jenkins-logs:				## Jenkins Logs
-	@docker-compose --file $(COMPOSE_FILE_PATH) logs jenkins
+	@docker compose --file $(COMPOSE_FILE_PATH) logs jenkins
 
 jenkins-logs-f:				## Jenkins Logs and follow
-	@docker-compose --file $(COMPOSE_FILE_PATH) logs -f jenkins
+	@docker compose --file $(COMPOSE_FILE_PATH) logs -f jenkins
 
 .PHONY: help
 help:				## Show Project commands
